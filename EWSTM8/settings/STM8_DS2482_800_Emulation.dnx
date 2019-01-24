@@ -1,57 +1,5 @@
 <?xml version="1.0"?>
 <settings>
-    <Stack>
-        <FillEnabled>0</FillEnabled>
-        <OverflowWarningsEnabled>1</OverflowWarningsEnabled>
-        <WarningThreshold>90</WarningThreshold>
-        <SpWarningsEnabled>1</SpWarningsEnabled>
-        <WarnLogOnly>1</WarnLogOnly>
-        <UseTrigger>1</UseTrigger>
-        <TriggerName>main</TriggerName>
-        <LimitSize>0</LimitSize>
-        <ByteLimit>50</ByteLimit>
-    </Stack>
-    <Trace1>
-        <Enabled>0</Enabled>
-        <ShowSource>1</ShowSource>
-    </Trace1>
-    <DebugChecksum>
-        <Checksum>2711481948</Checksum>
-    </DebugChecksum>
-    <CodeCoverage>
-        <Enabled>_ 0</Enabled>
-    </CodeCoverage>
-    <Disassembly>
-        <InstrCount>0</InstrCount>
-    </Disassembly>
-    <CallStack>
-        <ShowArgs>0</ShowArgs>
-    </CallStack>
-    <InterruptStripe>
-        <Sort>0</Sort>
-    </InterruptStripe>
-    <DriverProfiling>
-        <Enabled>0</Enabled>
-        <Mode>1</Mode>
-        <Graph>0</Graph>
-        <Symbiont>0</Symbiont>
-        <Exclusions />
-    </DriverProfiling>
-    <CallStackLog>
-        <Enabled>0</Enabled>
-    </CallStackLog>
-    <CallStackStripe>
-        <ShowTiming>1</ShowTiming>
-    </CallStackStripe>
-    <LogFile>
-        <LoggingEnabled>_ 0</LoggingEnabled>
-        <LogFile>_ ""</LogFile>
-        <Category>_ 0</Category>
-    </LogFile>
-    <TermIOLog>
-        <LoggingEnabled>_ 0</LoggingEnabled>
-        <LogFile>_ ""</LogFile>
-    </TermIOLog>
     <InterruptLog>
         <LogEnabled>0</LogEnabled>
         <GraphEnabled>0</GraphEnabled>
@@ -67,18 +15,22 @@
         <SumEnabled>0</SumEnabled>
         <ShowTimeSum>1</ShowTimeSum>
     </DataLog>
+    <Stack>
+        <FillEnabled>0</FillEnabled>
+        <OverflowWarningsEnabled>1</OverflowWarningsEnabled>
+        <WarningThreshold>90</WarningThreshold>
+        <SpWarningsEnabled>1</SpWarningsEnabled>
+        <WarnLogOnly>1</WarnLogOnly>
+        <UseTrigger>1</UseTrigger>
+        <TriggerName>main</TriggerName>
+        <LimitSize>0</LimitSize>
+        <ByteLimit>50</ByteLimit>
+    </Stack>
     <Breakpoints2>
-        <Bp0>_ 1 "STD_CODE2" "{$PROJ_DIR$\..\SRC\ds2482_800.c}.177.3" 0 0 1 "" 0 ""</Bp0>
-        <Count>1</Count>
+        <Count>0</Count>
     </Breakpoints2>
     <Interrupts>
         <Enabled>1</Enabled>
-        <Irq0>_ 0 0 0 0 1 0 0 100 0 1 "I2C_ADDR  0x8054  21  I2C_ITR.ITEVTEN  I2C_SR1.ADDR  ITC_SPR5.VECT19SPR"</Irq0>
-        <Irq1>_ 0 0 0 0 1 0 0 100 0 1 "I2C_AF  0x8054  21  I2C_ITR.ITEVTEN  I2C_SR2.AF  ITC_SPR5.VECT19SPR"</Irq1>
-        <Irq2>_ 0 0 0 0 1 0 0 100 0 1 "SPI_RXNE  0x8030  12  SPI_ICR.RXIE  SPI_SR.RXNE  ITC_SPR3.VECT10SPR"</Irq2>
-        <Irq3>_ 0 0 0 0 1 0 0 100 0 1 "SPI_TXE  0x8030  12  SPI_ICR.TXIE  SPI_SR.TXE  ITC_SPR3.VECT10SPR"</Irq3>
-        <Irq4>_ 0 0 0 0 1 0 0 100 0 1 "I2C_BTF  0x8054  21  I2C_ITR.ITEVTEN  I2C_SR1.BTF  ITC_SPR5.VECT19SPR"</Irq4>
-        <Count>5</Count>
     </Interrupts>
     <MemConfig>
         <Base>1</Base>
@@ -87,13 +39,44 @@
         <TypeViol>0</TypeViol>
         <Stop>1</Stop>
     </MemConfig>
-    <Aliases>
-        <Count>0</Count>
-        <SuppressDialog>0</SuppressDialog>
-    </Aliases>
+    <Trace1>
+        <Enabled>0</Enabled>
+        <ShowSource>1</ShowSource>
+    </Trace1>
     <Simulator>
         <Freq>16000000</Freq>
         <FreqHi>0</FreqHi>
         <MultiCoreRunAll>1</MultiCoreRunAll>
     </Simulator>
+    <DebugChecksum>
+        <Checksum>351767475</Checksum>
+    </DebugChecksum>
+    <CallStack>
+        <ShowArgs>0</ShowArgs>
+    </CallStack>
+    <DataSample>
+        <LogEnabled>0</LogEnabled>
+        <GraphEnabled>0</GraphEnabled>
+        <ShowTimeLog>1</ShowTimeLog>
+    </DataSample>
+    <LogFile>
+        <LoggingEnabled>_ 0</LoggingEnabled>
+        <LogFile>_ ""</LogFile>
+        <Category>_ 0</Category>
+    </LogFile>
+    <TermIOLog>
+        <LoggingEnabled>_ 0</LoggingEnabled>
+        <LogFile>_ ""</LogFile>
+    </TermIOLog>
+    <Breakpoints>
+        <Count>0</Count>
+    </Breakpoints>
+    <Aliases>
+        <Count>0</Count>
+        <SuppressDialog>0</SuppressDialog>
+    </Aliases>
+    <DebuggerSettings>
+        <DisableInterruptsWhenStepping>0</DisableInterruptsWhenStepping>
+        <LeaveTargetRunning>0</LeaveTargetRunning>
+    </DebuggerSettings>
 </settings>

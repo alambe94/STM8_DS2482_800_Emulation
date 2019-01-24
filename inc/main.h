@@ -2,7 +2,6 @@
 #define _MAIN_H
 
 #include "stm8s.h"
-#include "i2c_slave.h"
 
 
 /* Private defines -----------------------------------------------------------*/

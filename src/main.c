@@ -28,6 +28,8 @@
 
 /* Includes ------------------------------------------------------------------*/
 #include "stm8s.h"
+#include "ds2482_800.h"
+
 
 /* Private defines -----------------------------------------------------------*/
 /* Private function prototypes -----------------------------------------------*/
@@ -38,9 +40,12 @@ void main(void)
   
    CLK_HSIPrescalerConfig(CLK_PRESCALER_HSIDIV1); //f_master = HSI = 16Mhz
    enableInterrupts();
+   
+   DS2482_Init();
   /* Infinite loop */
   while (1)
   {
+    DS2482_Loop();
   }
   
 }

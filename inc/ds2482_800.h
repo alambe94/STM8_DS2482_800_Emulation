@@ -15,12 +15,10 @@
 #define I2C_SCL_PIN          GPIO_PIN_4
 #define I2C_SCL_PORT         GPIOB
 
-#define I2C_GIVE_ACK()       I2C_SDA_PORT->ODR &= ~I2C_SDA_PIN;\
-                             while(I2C_SCL_PORT->IDR & I2C_SCL_PIN);\
-                             I2C_SDA_PORT->ODR |= I2C_SDA_PIN;
-                             
-#define I2C_GIVE_NACK()      I2C_SDA_PORT->ODR |= I2C_SDA_PIN;
-                            
+/************ manual I2C ACK did not work*****************/
+#define I2C_GIVE_ACK()       I2C->CR2
+#define I2C_GIVE_NACK()      I2C->CR2
+
 
 void I2C_Slave_Init(uint8_t own_address);
 
@@ -163,6 +161,11 @@ typedef enum
 WAIT_FOR_CMD,
 WAIT_FOR_PARAM
 }State_Machine_t;
+
+
+void DS2482_Init();
+void DS2482_Loop();
+
 
 
 
