@@ -5,34 +5,21 @@
 #include "main.h"
 
 
-
-#define I2C_ACK_ENABLE()     do{I2C->CR2   |= I2C_CR2_ACK;}while(0)
-#define I2C_ACK_DISABLE()    do{I2C->CR2   &= ~I2C_CR2_ACK;}while(0)	
-
 #define I2C_SDA_PIN          GPIO_PIN_5
 #define I2C_SDA_PORT         GPIOB
 
 #define I2C_SCL_PIN          GPIO_PIN_4
 #define I2C_SCL_PORT         GPIOB
 
-/************ manual I2C ACK did not work*****************/
-#define I2C_GIVE_ACK()       I2C->CR2
-#define I2C_GIVE_NACK()      I2C->CR2
-
-
-void I2C_Slave_Init(uint8_t own_address);
-
-
-
 
 /****************I2C Address Pins, Ports*********************/
-#define DS2482_AD_0_PIN    GPIO_PIN_0
-#define DS2482_AD_0_PORT   GPIOA
+#define DS2482_AD_0_PIN    GPIO_PIN_5
+#define DS2482_AD_0_PORT   GPIOD
 
-#define DS2482_AD_1_PIN    GPIO_PIN_1
-#define DS2482_AD_1_PORT   GPIOA
+#define DS2482_AD_1_PIN    GPIO_PIN_6
+#define DS2482_AD_1_PORT   GPIOD
 
-#define DS2482_AD_2_PIN    GPIO_PIN_2
+#define DS2482_AD_2_PIN    GPIO_PIN_1
 #define DS2482_AD_2_PORT   GPIOA
 /****************I2C Address Pins, Ports*********************/
 
@@ -40,29 +27,29 @@ void I2C_Slave_Init(uint8_t own_address);
 
 
 /**********DS2482 Channels Pins, Ports***************/
-#define DS2482_IO_0_PIN   GPIO_PIN_0
-#define DS2482_IO_0_PORT  GPIOB
+#define DS2482_IO_0_PIN   GPIO_PIN_3
+#define DS2482_IO_0_PORT  GPIOC
 
-#define DS2482_IO_1_PIN   GPIO_PIN_1
-#define DS2482_IO_1_PORT  GPIOB
+#define DS2482_IO_1_PIN   GPIO_PIN_4
+#define DS2482_IO_1_PORT  GPIOC
 
-#define DS2482_IO_2_PIN   GPIO_PIN_2
-#define DS2482_IO_2_PORT  GPIOB
+#define DS2482_IO_2_PIN   GPIO_PIN_5
+#define DS2482_IO_2_PORT  GPIOC
 
-#define DS2482_IO_3_PIN   GPIO_PIN_3
-#define DS2482_IO_3_PORT  GPIOB
+#define DS2482_IO_3_PIN   GPIO_PIN_6
+#define DS2482_IO_3_PORT  GPIOC
 
-#define DS2482_IO_4_PIN   GPIO_PIN_4
-#define DS2482_IO_4_PORT  GPIOB
+#define DS2482_IO_4_PIN   GPIO_PIN_7
+#define DS2482_IO_4_PORT  GPIOC
 
-#define DS2482_IO_5_PIN   GPIO_PIN_5
-#define DS2482_IO_5_PORT  GPIOB
+#define DS2482_IO_5_PIN   GPIO_PIN_2
+#define DS2482_IO_5_PORT  GPIOD
 
-#define DS2482_IO_6_PIN   GPIO_PIN_6
-#define DS2482_IO_6_PORT  GPIOB
+#define DS2482_IO_6_PIN   GPIO_PIN_3
+#define DS2482_IO_6_PORT  GPIOD
 
-#define DS2482_IO_7_PIN   GPIO_PIN_7
-#define DS2482_IO_7_PORT  GPIOB
+#define DS2482_IO_7_PIN   GPIO_PIN_4
+#define DS2482_IO_7_PORT  GPIOD
 /**********DS2482 Channels Pins, Ports***************/
 
 

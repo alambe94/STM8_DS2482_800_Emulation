@@ -1615,6 +1615,9 @@
         <file>
             <name>$PROJ_DIR$\..\src\millis.c</name>
         </file>
+        <file>
+            <name>$PROJ_DIR$\..\src\tm_onewire.c</name>
+        </file>
     </group>
     <group>
         <name>STM8S_StdPeriph_Driver</name>

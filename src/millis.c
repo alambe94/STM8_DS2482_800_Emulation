@@ -5,7 +5,7 @@
 #define TIM4_PERIOD 125
 
 
-volatile uint32_t current_millis = 0; //--IO: volatile read/write 
+__IO uint32_t current_millis = 0; //--IO: volatile read/write 
 
 
 void Millis_Init(void)
@@ -28,21 +28,49 @@ void Millis_Init(void)
 
 
 uint32_t millis(void)
+
 {
 	return current_millis;
 }
 
+/*
 void delay_ms(uint32_t time)
 {
 	uint32_t temp;
 	temp =millis();
 	while(millis()-temp<time);
 	
+}*/
+
+void Delay_US(uint16_t time)
+{
+  while(time--)
+  {
+    nop();
+    nop();
+    nop();
+    nop();
+    nop();
+    nop();
+    nop();
+  }
 }
+
+
+void Delay_MS(uint16_t time)
+{
+  while(time--)
+  {
+    Delay_US(1000);
+  }
+}
+
+
 
 //Interupt event, happen every 1 ms
 
 INTERRUPT_HANDLER(TIM4_UPD_OVF_IRQHandler, 23) 
+
 {   
 	//increase 1, for millis() function
 	current_millis ++;

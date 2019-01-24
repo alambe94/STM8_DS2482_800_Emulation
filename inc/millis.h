@@ -6,13 +6,10 @@
 
 /* Private function prototypes -----------------------------------------------*/
 void Millis_Init(void);
-void delay_ms(uint32_t time);
+void Delay_US(uint16_t time);
+void Delay_MS(uint16_t time);
 
 uint32_t millis(void);
-
-
-
-
 
 
 #endif /* __MILLIS_H */
