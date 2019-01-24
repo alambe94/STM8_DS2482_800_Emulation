@@ -102,18 +102,66 @@ void DS2482_OW_Read_Single_Byte()
 
 void DS2482_Select_Channel(uint8_t channel)
 {
+  //implement one wire protocol
   
+  switch(channel)
+  {
+  case CHANNEL_0_CODE:
+    Channel_Selection_Register = CHANNEL_0_RETURN;
+    break;
+  case CHANNEL_1_CODE:
+    Channel_Selection_Register = CHANNEL_1_RETURN;
+    break;
+  case CHANNEL_2_CODE:
+    Channel_Selection_Register = CHANNEL_2_RETURN;
+    break;
+  case CHANNEL_3_CODE:
+    Channel_Selection_Register = CHANNEL_3_RETURN;
+    break;
+  case CHANNEL_4_CODE:
+    Channel_Selection_Register = CHANNEL_4_RETURN;
+    break;
+  case CHANNEL_5_CODE:
+    Channel_Selection_Register = CHANNEL_5_RETURN;
+    break;
+  case CHANNEL_6_CODE:
+    Channel_Selection_Register = CHANNEL_6_RETURN;
+    break;
+  case CHANNEL_7_CODE:
+    Channel_Selection_Register = CHANNEL_7_RETURN;
+    break;
+  default:
+    //error
+    break;
+  }
 }
 
 
-void DS2482_Set_Read_PTR(uint8_t PTR)
+void DS2482_Set_Read_PTR(uint8_t param)
 {
-  
+  switch(param)
+  {
+  case STATUS_REGISTER_PTR:
+    Register_PTR = &Status_Register;
+    break;
+  case READ_DATA_REGISTER_PTR:
+    Register_PTR = &Read_Data_Register;
+    break;
+  case CHANNEL_SELECTION_REGISTER_PTR:
+    Register_PTR = &Channel_Selection_Register;
+    break;
+  case CONFIGURATION_REGISTER_PTR:
+    Register_PTR = &Configuration_Register;
+    break;
+  default:
+    //error
+    break;
+  }
 }
 
-void DS2482_Write_CFG(uint8_t PTR)
+void DS2482_Write_CFG(uint8_t param)
 {
-  
+  Configuration_Register = param;
 }
 
 
