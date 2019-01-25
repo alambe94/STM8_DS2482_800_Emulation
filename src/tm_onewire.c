@@ -29,7 +29,7 @@ void TM_OneWire_Init(TM_OneWire_t* OneWireStruct, GPIO_TypeDef* GPIOx, GPIO_Pin_
 	/* Initialize delay if it was not already */
 
 	/* Init GPIO pin */
-        GPIO_Init(GPIOx,GPIO_Pin,GPIO_MODE_OUT_OD_HIZ_SLOW);
+        GPIO_Init(GPIOx,GPIO_Pin,GPIO_MODE_OUT_OD_HIZ_FAST);
 	
 	/* Save settings */
 	OneWireStruct->GPIOx = GPIOx;

@@ -53,6 +53,12 @@ void Delay_US(uint16_t time)
     nop();
     nop();
     nop();
+    nop();
+    nop();
+    nop();
+    nop();
+    nop();
+    nop();
   }
 }
 

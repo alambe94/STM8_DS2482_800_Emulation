@@ -19,16 +19,16 @@ uint8_t         Received_Parameter = 0x00;
 uint8_t         Cammand_Valid_Flag = 0x00;
 uint8_t         Cammand_Execute_Flag = 0x00;
 
-TM_OneWire_t One_Wire_Struct_Ch0;
-TM_OneWire_t One_Wire_Struct_Ch1;
-TM_OneWire_t One_Wire_Struct_Ch2;
-TM_OneWire_t One_Wire_Struct_Ch3;
-TM_OneWire_t One_Wire_Struct_Ch4;
-TM_OneWire_t One_Wire_Struct_Ch5;
-TM_OneWire_t One_Wire_Struct_Ch6;
-TM_OneWire_t One_Wire_Struct_Ch7;
+TM_OneWire_t One_Wire_Struct_CH0;
+TM_OneWire_t One_Wire_Struct_CH1;
+TM_OneWire_t One_Wire_Struct_CH2;
+TM_OneWire_t One_Wire_Struct_CH3;
+TM_OneWire_t One_Wire_Struct_CH4;
+TM_OneWire_t One_Wire_Struct_CH5;
+TM_OneWire_t One_Wire_Struct_CH6;
+TM_OneWire_t One_Wire_Struct_CH7;
 
-TM_OneWire_t* Current_OW_CH_PTR = &One_Wire_Struct_Ch0; //Current Read ponter of I2C read cammand
+TM_OneWire_t* Current_OW_CH_PTR = &One_Wire_Struct_CH0; //Current Read ponter of I2C read cammand
 
 
 
@@ -43,14 +43,14 @@ void DS2482_Init()
   /*************input***************************/
   
   /*************output***************************/
-  TM_OneWire_Init(&One_Wire_Struct_Ch0, DS2482_IO_0_PORT, DS2482_IO_0_PIN);
-  TM_OneWire_Init(&One_Wire_Struct_Ch1, DS2482_IO_0_PORT, DS2482_IO_0_PIN);
-  TM_OneWire_Init(&One_Wire_Struct_Ch2, DS2482_IO_0_PORT, DS2482_IO_0_PIN);
-  TM_OneWire_Init(&One_Wire_Struct_Ch3, DS2482_IO_0_PORT, DS2482_IO_0_PIN);
-  TM_OneWire_Init(&One_Wire_Struct_Ch4, DS2482_IO_0_PORT, DS2482_IO_0_PIN);
-  TM_OneWire_Init(&One_Wire_Struct_Ch5, DS2482_IO_0_PORT, DS2482_IO_0_PIN);
-  TM_OneWire_Init(&One_Wire_Struct_Ch6, DS2482_IO_0_PORT, DS2482_IO_0_PIN);
-  TM_OneWire_Init(&One_Wire_Struct_Ch7, DS2482_IO_0_PORT, DS2482_IO_0_PIN);
+  TM_OneWire_Init(&One_Wire_Struct_CH0, DS2482_IO_0_PORT, DS2482_IO_0_PIN);
+  TM_OneWire_Init(&One_Wire_Struct_CH1, DS2482_IO_1_PORT, DS2482_IO_1_PIN);
+  TM_OneWire_Init(&One_Wire_Struct_CH2, DS2482_IO_2_PORT, DS2482_IO_2_PIN);
+  TM_OneWire_Init(&One_Wire_Struct_CH3, DS2482_IO_3_PORT, DS2482_IO_3_PIN);
+  TM_OneWire_Init(&One_Wire_Struct_CH4, DS2482_IO_4_PORT, DS2482_IO_4_PIN);
+  TM_OneWire_Init(&One_Wire_Struct_CH5, DS2482_IO_5_PORT, DS2482_IO_5_PIN);
+  TM_OneWire_Init(&One_Wire_Struct_CH6, DS2482_IO_6_PORT, DS2482_IO_6_PIN);
+  TM_OneWire_Init(&One_Wire_Struct_CH7, DS2482_IO_7_PORT, DS2482_IO_7_PIN);
   /*************output***************************/
   
   /*************i2c***************************/
@@ -81,95 +81,12 @@ void DS2482_Init()
   
 }
 
-
-/*    DS2482_Device_Reset
-
-Command Code:
-F0h
-
-Command Parameter: 
-None
-
-Description:
-Performs a global reset of device state machine logic, which in turn
-selects IO0 as the active 1-Wire channel.
-Terminates any ongoing 1-Wire communication.
-
-Typical Use: 
-Device initialization after power-up; re-initialization (reset) as desired.
-
-Restriction: 
-None (can be executed at any time)
-
-Error Response: 
-None
-
-Command Duration: 
-Maximum 525ns, counted from falling SCL edge of the command code
-acknowledge bit.
-
-1-Wire Activity: 
-Ends maximum 262.5ns after the falling SCL edge of the command code
-acknowledge bit.
-
-Read Pointer Position: 
-Status Register (for busy polling)
-
-Status Bits Affected: 
-RST set to 1,
-1WB, PPD, SD, SBR, TSB, DIR set to 0
-
-Configuration Bits Affected: 
-1WS, APU, SPU set to 0
-
-*/
-
 void DS2482_Device_Reset(void)
 {
     //reset status
   Register_PTR = &Status_Register; // point to status register
 }
 
-
-/*  DS2482_Set_Read_PTR
-Command Code: 
-E1h
-
-Command Parameter: 
-Pointer Code
-
-Description: 
-Sets the read pointer to the specified register. Overwrites the read pointer
-position of any 1-Wire communication command in progress.
-
-Typical Use: 
-To prepare reading the result from a 1-Wire Byte command; random read
-access of registers.
-
-Restriction: 
-None (can be executed at any time)
-
-Error Response:
- If the pointer code is not valid, the pointer code will not be acknowledged
-and the command will be ignored.
-
-Command Duration: 
-None; the read pointer is updated on the rising SCL edge of the pointer
-code acknowledge bit.
-
-1-Wire Activity: 
-Not Affected
-
-Read Pointer Position: 
-As Specified by the Pointer Code
-
-Status Bits Affected: 
-None
-
-Configuration Bits Affected:
-None
-
-*/
 
 void DS2482_Set_Read_PTR(uint8_t param)
 {
@@ -194,49 +111,6 @@ void DS2482_Set_Read_PTR(uint8_t param)
 }
 
 
-/* DS2482_Write_CFG
-Command Code: 
-D2h
-
-Command Parameter Configuration: 
-Byte
-
-Description:
-Writes a new configuration byte. The new settings take effect
-immediately. NOTE: When writing to the Configuration Register, the new
-data is accepted only if the upper nibble (bits 7 to 4) is the one's
-complement of the lower nibble (bits 3 to 0). When read, the upper nibble
-is always 0h.
-
-Typical Use:
-Defining the features for subsequent 1-Wire communication.
-
-Restriction: 
-1-Wire activity must have ended before the DS2482 can process this
-command.
-
-Error Response: 
-Command code and parameter will not be acknowledged if 1WB = 1 at the
-time the command code is received and the command will be ignored.
-
-Command Duration: 
-None; the configuration register is updated on the rising SCL edge of the
-configuration byte acknowledge bit.
-
-1-Wire Activity: 
-None
-
-Read Pointer Position: 
-Configuration Register (to verify write)
-
-Status Bits Affected: 
-RST set to 0
-
-Configuration Bits Affected: 
-1WS, SPU, APU updated
-
-*/
-
 void DS2482_Write_CFG(uint8_t param)
 {
   Configuration_Register = param;
@@ -244,49 +118,6 @@ void DS2482_Write_CFG(uint8_t param)
 }
 
 
-/* DS2482_Select_Channel
-Command Code: 
-C3h
-
-Command Parameter:
-Selection Code
-
-Description
-Sets the 1-Wire IO channel for subsequent 1-Wire communication
-commands. NOTE: The selection code read back is different from the
-code written. See the table below for the respective values.
-
-Typical Use: 
-Selecting a 1-Wire IO channel other that IO0; randomly selecting one of
-the available 1-Wire IO channels.
-
-Restriction: 
-1-Wire activity must have ended before the DS2482 can process this
-command.
-
-Error Response:
-Command code and parameter will not be acknowledged if 1WB = 1 at the
-time the command code is received and the command will be ignored.
-If the selection code is not valid, the selection code will not be
-acknowledged and the command will be ignored.
-
-Command Duration: 
-None; the channel selection register is updated on the rising SCL edge of
-the selection code acknowledge bit.
-
-1-Wire Activity: 
-None
-
-Read Pointer Position: 
-Channel Selection Register (to verify write)
-
-Status Bits Affected: 
-None
-
-Configuration Bits: 
-Affected None
-
-*/
 
 void DS2482_Select_Channel(uint8_t channel)
 {
@@ -300,35 +131,35 @@ void DS2482_Select_Channel(uint8_t channel)
   {
   case CHANNEL_0_CODE:
     Channel_Selection_Register = CHANNEL_0_RETURN;
-    Current_OW_CH_PTR = &One_Wire_Struct_Ch0;
+    Current_OW_CH_PTR = &One_Wire_Struct_CH0;
     break;
   case CHANNEL_1_CODE:
     Channel_Selection_Register = CHANNEL_1_RETURN;
-    Current_OW_CH_PTR = &One_Wire_Struct_Ch1;
+    Current_OW_CH_PTR = &One_Wire_Struct_CH1;
     break;
   case CHANNEL_2_CODE:
     Channel_Selection_Register = CHANNEL_2_RETURN;
-    Current_OW_CH_PTR = &One_Wire_Struct_Ch2;
+    Current_OW_CH_PTR = &One_Wire_Struct_CH2;
     break;
   case CHANNEL_3_CODE:
     Channel_Selection_Register = CHANNEL_3_RETURN;
-    Current_OW_CH_PTR = &One_Wire_Struct_Ch3;
+    Current_OW_CH_PTR = &One_Wire_Struct_CH3;
     break;
   case CHANNEL_4_CODE:
     Channel_Selection_Register = CHANNEL_4_RETURN;
-    Current_OW_CH_PTR = &One_Wire_Struct_Ch4;
+    Current_OW_CH_PTR = &One_Wire_Struct_CH4;
     break;
   case CHANNEL_5_CODE:
     Channel_Selection_Register = CHANNEL_5_RETURN;
-    Current_OW_CH_PTR = &One_Wire_Struct_Ch5;
+    Current_OW_CH_PTR = &One_Wire_Struct_CH5;
     break;
   case CHANNEL_6_CODE:
     Channel_Selection_Register = CHANNEL_6_RETURN;
-    Current_OW_CH_PTR = &One_Wire_Struct_Ch6;
+    Current_OW_CH_PTR = &One_Wire_Struct_CH6;
     break;
   case CHANNEL_7_CODE:
     Channel_Selection_Register = CHANNEL_7_RETURN;
-    Current_OW_CH_PTR = &One_Wire_Struct_Ch7;
+    Current_OW_CH_PTR = &One_Wire_Struct_CH7;
     break;
   default:
     //error
@@ -336,54 +167,6 @@ void DS2482_Select_Channel(uint8_t channel)
   }
 }
 
-
-/*
-Command Code: 
-B4h
-
-Command Parameter: 
-None
-
-Description:
-Generates a 1-Wire Reset/Presence Detect cycle (Figure 4) at the
-selected IO channel. The state of the 1-Wire line is sampled at tSI and tMSP
-and the result is reported to the host processor through the status register,
-bits PPD and SD.
-
-Typical Use: 
-To initiate or end any 1-Wire communication sequence.
-
-Restriction:
-1-Wire activity must have ended before the DS2482 can process this
-command. Strong pullup (see SPU bit) should not be used in conjunction
-with the 1-Wire Reset command. If SPU is enabled, the PPD bit may not
-be valid and may cause a violation of the device's absolute maximum
-rating.
-
-Error Response: 
-Command code will not be acknowledged if 1WB = 1 at the time the
-command code is received and the command will be ignored.
-
-Command Duration:
-tRSTL + tRSTH + maximum 262.5ns, counted from the falling SCL edge of the
-command code acknowledge bit.
-
-1-Wire Activity: 
-Begins maximum 262.5ns after the falling SCL edge of the command
-code acknowledge bit.
-
-Read Pointer Position: 
-Status Register (for busy polling)
-
-Status Bits Affected
-1WB (set to 1 for tRSTL + tRSTH),
-PPD is updated at tRSTL + tMSP,
-SD is updated at tRSTL + tSI
-
-Configuration Bits Affected: 
-1WS, APU, SPU apply
-
-*/
 
 void DS2482_OW_Reset(void)
 {
