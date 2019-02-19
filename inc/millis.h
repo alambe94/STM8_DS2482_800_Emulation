@@ -2,6 +2,8 @@
 #ifndef __MILLIS_H
 #define __MILLIS_H
 
+#include "stm8s.h"
+#include "stm8s_it.h"
 
 
 /* Private function prototypes -----------------------------------------------*/

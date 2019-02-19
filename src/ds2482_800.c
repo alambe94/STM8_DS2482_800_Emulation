@@ -1,41 +1,42 @@
 #include "ds2482_800.h"
-#include "tm_onewire.h"
 
-#include "stm8s.h"
-
-
-
+//*****************DS2484 Registers*****************//
 uint8_t  Configuration_Register =     0x00;
 uint8_t  Status_Register =            0x00;
 uint8_t  Channel_Selection_Register = 0x00;
 uint8_t  Read_Data_Register =         0x00;
 
-uint8_t  DS2482_Busy = RESET;
 uint8_t* Register_PTR = &Status_Register; //Current Read ponter of I2C read cammand
 
+
+
 State_Machine_t Current_State = WAIT_FOR_CMD;
-uint8_t         Received_Cammand = 0x00;
-uint8_t         Received_Parameter = 0x00;
-uint8_t         Cammand_Valid_Flag = 0x00;
-uint8_t         Cammand_Execute_Flag = 0x00;
 
-TM_OneWire_t One_Wire_Struct_CH0;
-TM_OneWire_t One_Wire_Struct_CH1;
-TM_OneWire_t One_Wire_Struct_CH2;
-TM_OneWire_t One_Wire_Struct_CH3;
-TM_OneWire_t One_Wire_Struct_CH4;
-TM_OneWire_t One_Wire_Struct_CH5;
-TM_OneWire_t One_Wire_Struct_CH6;
-TM_OneWire_t One_Wire_Struct_CH7;
-
-TM_OneWire_t* Current_OW_CH_PTR = &One_Wire_Struct_CH0; //Current Read ponter of I2C read cammand
+uint8_t         Received_Cammand = 0x00;// store cmd
+uint8_t         Received_Parameter = 0x00; //store param
+uint8_t         Cammand_Valid_Flag = RESET;
+uint8_t         Cammand_Execute_Flag = RESET;
+uint8_t         DS2482_Busy = RESET;
 
 
+TM_OneWire_t   One_Wire_Struct_CH0;
+TM_OneWire_t   One_Wire_Struct_CH1;
+TM_OneWire_t   One_Wire_Struct_CH2;
+TM_OneWire_t   One_Wire_Struct_CH3;
+TM_OneWire_t   One_Wire_Struct_CH4;
+TM_OneWire_t   One_Wire_Struct_CH5;
+TM_OneWire_t   One_Wire_Struct_CH6;
+TM_OneWire_t   One_Wire_Struct_CH7;
 
-void DS2482_Init()
+TM_OneWire_t* Current_OW_CH_PTR = &One_Wire_Struct_CH0; //pointer to current OW Channel
+
+
+
+void DS2482_Init(void)
 {
   //config gpio
   
+  // gpio for i2c slave address config
   /*************input***************************/
   GPIO_Init(DS2482_AD_0_PORT,DS2482_AD_0_PIN,GPIO_MODE_IN_PU_NO_IT);
   GPIO_Init(DS2482_AD_1_PORT,DS2482_AD_1_PIN,GPIO_MODE_IN_PU_NO_IT);
@@ -54,14 +55,14 @@ void DS2482_Init()
   /*************output***************************/
   
   /*************i2c***************************/
-  uint8_t own_address = 0x18; //Default
+  uint8_t own_address = 0x18; //0x18 is Default DS2482 address
   
   GPIO_Init(I2C_SDA_PORT,I2C_SDA_PIN,GPIO_MODE_OUT_OD_HIZ_SLOW);
   GPIO_Init(I2C_SCL_PORT,I2C_SCL_PIN,GPIO_MODE_OUT_OD_HIZ_SLOW);
   
-  //own_address |= GPIO_READ_PIN(DS2482_AD_0_PORT,DS2482_AD_0_PIN)<<0;
-  //own_address |= GPIO_READ_PIN(DS2482_AD_1_PORT,DS2482_AD_1_PIN)<<1;
-  //own_address |= GPIO_READ_PIN(DS2482_AD_2_PORT,DS2482_AD_2_PIN)<<2;
+  own_address |= GPIO_READ_PIN(DS2482_AD_0_PORT,DS2482_AD_0_PIN)<<0;
+  own_address |= GPIO_READ_PIN(DS2482_AD_1_PORT,DS2482_AD_1_PIN)<<1;
+  own_address |= GPIO_READ_PIN(DS2482_AD_2_PORT,DS2482_AD_2_PIN)<<2;
   
   own_address = own_address<<1;
   
@@ -81,14 +82,13 @@ void DS2482_Init()
   
 }
 
-void DS2482_Device_Reset(void)
+void static DS2482_Device_Reset(void)
 {
-    //reset status
-  Register_PTR = &Status_Register; // point to status register
+    //reset MCU
 }
 
 
-void DS2482_Set_Read_PTR(uint8_t param)
+void static DS2482_Set_Read_PTR(uint8_t param)
 {
   switch(param)
   {
@@ -111,20 +111,19 @@ void DS2482_Set_Read_PTR(uint8_t param)
 }
 
 
-void DS2482_Write_CFG(uint8_t param)
+void static DS2482_Write_CFG(uint8_t cfg)
 {
-  Configuration_Register = param;
-  Register_PTR = &Configuration_Register;
+  Configuration_Register = cfg;
+  Register_PTR = &Configuration_Register; 
 }
 
 
-
-void DS2482_Select_Channel(uint8_t channel)
-{
   /*Sets the 1-Wire IO channel for subsequent 1-Wire communication
   commands. NOTE: The selection code read back is different from the
-  code written. See the table below for the respective values. */
-  //implement one wire protocol
+  code written.*/
+void static DS2482_Select_Channel(uint8_t channel)
+{
+
   Register_PTR = &Channel_Selection_Register;
   
   switch(channel)
@@ -168,33 +167,32 @@ void DS2482_Select_Channel(uint8_t channel)
 }
 
 
-void DS2482_OW_Reset(void)
+void static DS2482_OW_Reset(void)
 {
   /*Generates a 1-Wire Reset/Presence Detect cycle (Figure 4) at the
   selected IO channel. The state of the 1-Wire line is sampled at tSI and tMSP
   and the result is reported to the host processor through the status register,
   bits PPD and SD.*/
-  //implement one wire protocol
   Register_PTR = &Status_Register; // point to status register
   TM_OneWire_Reset(Current_OW_CH_PTR);
 }
 
 
 
-void DS2482_OW_Write_Single_Bit(uint8_t data_bit)
+void static DS2482_OW_Write_Single_Bit(uint8_t data_bit)
 {
   //implement one wire protocol
     Register_PTR = &Status_Register; // point to status register
     TM_OneWire_WriteBit(Current_OW_CH_PTR,(data_bit & 0x80));
 }
-void DS2482_OW_Write_Single_Byte(uint8_t data_byte)
+void static DS2482_OW_Write_Single_Byte(uint8_t data_byte)
 {
   //implement one wire protocol
     Register_PTR = &Status_Register; // point to status register
     TM_OneWire_WriteByte(Current_OW_CH_PTR,data_byte);
 }
 
-void DS2482_OW_Read_Single_Byte()
+void static DS2482_OW_Read_Single_Byte(void)
 {
   /*Status Register (for busy polling)
   NOTE: To read the data byte received from the 1-Wire IO channel, issue
@@ -209,17 +207,14 @@ void DS2482_OW_Read_Single_Byte()
 
 
 
-void DS2482_OW_Triplet(void)
+void static DS2482_OW_Triplet(void)
 {
     //implement one wire protocol
   Register_PTR = &Status_Register; // point to status register
 }
 
 
-
-
-
-void DS2482_Loop()
+void DS2482_Loop(void)
 {
   if(Cammand_Execute_Flag ==SET)
   {
@@ -266,7 +261,6 @@ void DS2482_Loop()
     I2C->CR2 |= I2C_CR2_ACK;
   }
 }
-
 
 
 INTERRUPT_HANDLER(I2C_IRQHandler, 19)

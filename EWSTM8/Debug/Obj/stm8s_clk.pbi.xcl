@@ -1,18 +1,18 @@
-"C:\Users\sam\Documents\STM8_DS2482_800_Emulation\STM8S_StdPeriph_Driver\src\stm8s_clk.c"
+"C:\Users\sam\Documents\IAR Embedded Workbench\STM8_DS2482_800_Emulation\STM8S_StdPeriph_Driver\src\stm8s_clk.c"
 -std=c99
 -ferror-limit=0
 -I
-C:\Users\sam\Documents\STM8_DS2482_800_Emulation\EWSTM8\..\inc
+C:\Users\sam\Documents\IAR Embedded Workbench\STM8_DS2482_800_Emulation\EWSTM8\..\inc
 -I
-C:\Users\sam\Documents\STM8_DS2482_800_Emulation\EWSTM8\..\STM8S_StdPeriph_Driver\inc
+C:\Users\sam\Documents\IAR Embedded Workbench\STM8_DS2482_800_Emulation\EWSTM8\..\STM8S_StdPeriph_Driver\inc
 -I
 C:\Program Files (x86)\IAR Systems\Embedded Workbench 8.0\stm8\inc
 -I
 C:\Program Files (x86)\IAR Systems\Embedded Workbench 8.0\stm8\inc\c
 -I
-C:\Users\sam\Documents\STM8_DS2482_800_Emulation\inc
+C:\Users\sam\Documents\IAR Embedded Workbench\STM8_DS2482_800_Emulation\inc
 -I
-C:\Users\sam\Documents\STM8_DS2482_800_Emulation\STM8S_StdPeriph_Driver\inc
+C:\Users\sam\Documents\IAR Embedded Workbench\STM8_DS2482_800_Emulation\STM8S_StdPeriph_Driver\inc
 -D__CHAR_BITS__=8
 -D__CHAR_MAX__=127
 -D__CHAR_MIN__=(-__CHAR_MAX__-1)

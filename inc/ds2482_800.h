@@ -2,6 +2,8 @@
 #define _DS2482_800_H
 
 #include "stm8s.h"
+#include "stm8s_it.h"
+#include "tm_onewire.h"
 #include "main.h"
 
 
@@ -150,8 +152,8 @@ WAIT_FOR_PARAM
 }State_Machine_t;
 
 
-void DS2482_Init();
-void DS2482_Loop();
+void DS2482_Init(void);
+void DS2482_Loop(void);
 
 
 

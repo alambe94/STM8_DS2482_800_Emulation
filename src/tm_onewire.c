@@ -254,7 +254,7 @@ uint8_t TM_OneWire_Search(TM_OneWire_t* OneWireStruct, uint8_t command) {
 	return search_result;
 }
 
-int TM_OneWire_Verify(TM_OneWire_t* OneWireStruct) {
+int static TM_OneWire_Verify(TM_OneWire_t* OneWireStruct) {
 	unsigned char rom_backup[8];
 	int i,rslt,ld_backup,ldf_backup,lfd_backup;
 
@@ -294,7 +294,7 @@ int TM_OneWire_Verify(TM_OneWire_t* OneWireStruct) {
 	return rslt;
 }
 
-void TM_OneWire_TargetSetup(TM_OneWire_t* OneWireStruct, uint8_t family_code) {
+void static TM_OneWire_TargetSetup(TM_OneWire_t* OneWireStruct, uint8_t family_code) {
    uint8_t i;
 
 	/* Set the search state to find SearchFamily type devices */
@@ -308,7 +308,7 @@ void TM_OneWire_TargetSetup(TM_OneWire_t* OneWireStruct, uint8_t family_code) {
 	OneWireStruct->LastDeviceFlag = 0;
 }
 
-void TM_OneWire_FamilySkipSetup(TM_OneWire_t* OneWireStruct) {
+void static TM_OneWire_FamilySkipSetup(TM_OneWire_t* OneWireStruct) {
 	/* Set the Last discrepancy to last family discrepancy */
 	OneWireStruct->LastDiscrepancy = OneWireStruct->LastFamilyDiscrepancy;
 	OneWireStruct->LastFamilyDiscrepancy = 0;
